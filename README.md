@@ -1,10 +1,10 @@
 # A predictive model for predicting the smoking status
 
 **Authors**  
-- Anna Chesnokova <a href="https://orcid.org/0000-0001-7947-1654"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+- Anna Chesnokova
 
 **Supervisors**
-- Ivan Valiev <a href="https://orcid.org/0000-0002-8545-6052"><img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
+- Ivan Valiev
 
 ## Table of contents
 
@@ -120,6 +120,8 @@ _Figure 2. PCAplot by normalized log2 of the number of reads._
 
 ### Volcano plot for DEGs
 
+![Volcano_Plot](https://github.com/anisssum/SmokingStatusPrediction/blob/main/img/plot_zoom_png.png)
+
 ### Transcription factors (ARCHS4):
 
 - RHOXF2
@@ -136,7 +138,11 @@ _Figure 2. PCAplot by normalized log2 of the number of reads._
 
 ### F1 value for different feature sets
 
+![F1_value](https://github.com/anisssum/SmokingStatusPrediction/blob/main/img/2024-05-27_01-35-50.png)
+
 ### SHAP value (effect on model result)
+
+![SHAP_value](https://github.com/anisssum/SmokingStatusPrediction/blob/main/img/2024-05-27_01-49-05.png)
 
 ## Summary
 
