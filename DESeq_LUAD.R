@@ -97,7 +97,7 @@ plotPCA(transformed_dds, intgroup = c('type'))
 dds$type <- relevel(dds$type, ref = '13')
 dds <- DESeq(dds)
 res <- results(dds, name = resultsNames(dds)[2])
-write.table(res, file = "/data/DESeq_res.csv")
+write.table(res, file = "data/DESeq_res.csv")
 
 # Process DESeq results
 res2 <- res %>% as.data.frame() %>%
@@ -111,10 +111,10 @@ res2 <- res %>% as.data.frame() %>%
 
 # Write top DEGs to files
 DEG_up <- res2 %>% filter(padj < 0.05) %>% filter(log2FoldChange > 0)
-write.table(head(DEG_up$gene, 250), file = "/data/DEG_up.csv", row.names = FALSE)
+write.table(head(DEG_up$gene, 250), file = "data/DEG_up.csv", row.names = FALSE)
 
 DEG_down <- res2 %>% filter(padj < 0.05) %>% filter(log2FoldChange < 0)
-write.table(head(DEG_down$gene, 250), file = "/data/DEG_down.csv", row.names = FALSE)
+write.table(head(DEG_down$gene, 250), file = "data/DEG_down.csv", row.names = FALSE)
 
 # Create volcano plot
 res_data <- data.frame(res)
