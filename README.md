@@ -1,9 +1,9 @@
 # A predictive model for predicting the smoking status
 
-**Authors**  
+**Author**  
 - Anna Chesnokova
 
-**Supervisors**
+**Supervisor**
 - Ivan Valiev
 
 ## Table of contents
