@@ -13,13 +13,15 @@ index <- index[-1, ]
 
 # Read and prepare sample type data
 sample_type <- head(read.csv("data/transpose_ID_SampleType.csv", sep = " ", header = FALSE), 2)
-colnames(sample_type) <- head(sample_type, 1)
+cols <- head(sample_type, 1)
+colnames(sample_type) <- cols
 sample_type <- sample_type[-1, ]
 sample_type[sample_type == 'Primary'] <- 1
 sample_type[sample_type == 'Recurrent'] <- 1
 sample_type[sample_type == 'Solid'] <- 0
 sample_type <- lapply(sample_type, as.numeric)
 sample_type <- as.data.frame(sample_type)
+colnames(sample_type) <- cols
 
 # Read and prepare gene data
 data <- read.csv("data/tcga.gene_sums.LUAD.R109", sep = "\t", header = FALSE)
