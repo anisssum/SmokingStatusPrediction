@@ -32,7 +32,7 @@ Lung cancer remains one of the most prevalent and deadly forms of cancer worldwi
 Smoking is a major risk factor, influencing both the initiation and progression of lung cancer,
 creating certain patterns of mutations and gene expression [^2].
 Recent advancements in genomics and transcriptomics have provided valuable insights into the
-molecular mechanisms underlying smoking-related carcinogenesis [^3-^4].
+molecular mechanisms underlying smoking-related carcinogenesis [^3][^4].
 This study aims to develop a machine learning model to predict the smoking status
 of lung cancer patients based on their genetic and transcriptomic profiles.
 The primary goal is to enhance the accuracy of classification by integrating transcription factors (TFs),
