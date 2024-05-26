@@ -28,16 +28,21 @@ Tobacco Smoking History Status:
 - Current reformed smoker for ≤15 years (less than or equal to 15 years) = 4
 - Current reformed smoker, duration not specified = 5
 
-Lung cancer remains one of the most prevalent and deadly forms of cancer worldwide [1-2].
-Smoking is a major risk factor, influencing both the initiation and progression of lung cancer.
-Recent advancements in genomics and transcriptomics have provided valuable insights into
-the molecular mechanisms underlying smoking-related carcinogenesis [3-4].
-This study aims to develop a machine learning model to predict the smoking status of lung cancer
-patients based on their genetic and transcriptomic profiles.
-The primary goal is to enhance the accuracy of classification by integrating
-transcription factors (TFs), differential gene expression data (DEGs) and mutational signatures.
+Lung cancer remains one of the most prevalent and deadly forms of cancer worldwide [^1].
+Smoking is a major risk factor, influencing both the initiation and progression of lung cancer,
+creating certain patterns of mutations and gene expression [^2].
+Recent advancements in genomics and transcriptomics have provided valuable insights into the
+molecular mechanisms underlying smoking-related carcinogenesis [^3-^4].
+This study aims to develop a machine learning model to predict the smoking status
+of lung cancer patients based on their genetic and transcriptomic profiles.
+The primary goal is to enhance the accuracy of classification by integrating transcription factors (TFs),
+differential gene expression data (DEGs) and mutational signatures.
 
 ## Pipeline
+
+Gene expression, smoking status data and mutation annotation files were retrieved from the database UCSC XENA [^5].
+
+In order to use `.ipnyb` notebooks you will need to download ['requirements.txt'](https://github.com/anisssum/SmokingIndexPrediction/blob/main/requirements.txt).
 
 ### Data preparation for differential gene expression analysis
 
@@ -55,7 +60,7 @@ Script for data preparation and calculation of differential gene expression: [DE
 
 1. Select only primery and recurent tumors.
 
-2. Prepare Metadata for DESeq2 and create a table for machine learning models ([data_t_sort_all.txt.gz](https://github.com/anisssum/SmokingIndexPrediction/blob/main/data/data_t_sort_all.txt.gz), (forced compressed for github)).
+2. Prepare Metadata for DESeq2 [^6] and create a table for machine learning models ([data_t_sort_all.txt.gz](https://github.com/anisssum/SmokingIndexPrediction/blob/main/data/data_t_sort_all.txt.gz), (forced compressed for github)).
 
 3. Obtaining train id ([train_id.csv](https://github.com/anisssum/SmokingIndexPrediction/blob/main/data/train_id.csv)) for calculating differential gene expression.
 
@@ -82,18 +87,18 @@ that uses gene lengths ([gene_length_1.txt](https://github.com/anisssum/SmokingI
 
 4. Build logistic regression models for DEGs (tpm value and log10+1 tpm value).
 
-6. Build logistic regression models for TFs obtained from the Enrichr database (tpm value and log10+1 tpm value).
+6. Build logistic regression models for TFs obtained from the Enrichr database (tpm value and log10+1 tpm value) [^7].
 
 ### Integration of mutation signature data
 
 The section of work with mutation annotation files is located in the folder `/maf`.
 
-1. In the original file ([TCGA-LUAD.mutect2_snv.tsv](https://github.com/anisssum/SmokingIndexPrediction/blob/main/maf/data/TCGA-LUAD.mutect2_snv.tsv))
+1. In the original file ([TCGA-LUAD.mutect2_snv.tsv](https://github.com/anisssum/SmokingIndexPrediction/blob/main/maf/data/TCGA-LUAD.mutect2_snv.tsv))  [^8]
 select only single-nucleotide variants ([TCGA-LUAD.mutect2_sbs.tsv](https://github.com/anisssum/SmokingIndexPrediction/blob/main/maf/data/TCGA-LUAD.mutect2_sbs.tsv))
 using a script [filter_sbs.sh](https://github.com/anisssum/SmokingIndexPrediction/blob/main/maf/filter_sbs.sh).
 
 2. With a script [count_signatures.R](https://github.com/anisssum/SmokingIndexPrediction/blob/main/maf/count_signatures.R)
-using the library `deconstructSigs` we will create a three nucleotide matrix and calculate the weight of each signature
+using the library `deconstructSigs` [^9] we will create a three nucleotide matrix and calculate the weight of each signature
 [combined_table_signatures_tobacco.tsv](https://github.com/anisssum/SmokingIndexPrediction/blob/main/maf/data/combined_table_signatures_tobacco.tsv).
 
 ### Building machine learning models
@@ -102,7 +107,7 @@ using the library `deconstructSigs` we will create a three nucleotide matrix and
 
 1. Replace patient IDs and combine data from DEGs and mutation-signature weights.
 
-2. Build machine learning: Logistic Regression, Decision Tree Classifier, Random Forest Classifier, and LGBM Classifier.
+2. Build machine learning: Logistic Regression, Decision Tree Classifier, Random Forest Classifier, and LGBM Classifier [^10].
 
 3. Calculating shap values.
 
@@ -153,4 +158,22 @@ Future studies should focus on validating these findings in larger independent c
 
 ## Reference:
 
-[^1]:	
+[^1]:	Siegel, R. L., Miller, K. D., and Jemal, A. "Cancer statistics, 2020." CA: A Cancer Journal for Clinicians, 2020. doi:10.3322/caac.21590.
+
+[^2]: Govindan R. et al. Genomic landscape of non-small cell lung cancer in smokers and never-smokers //Cell. – 2012. – Т. 150. – №. 6. – С. 1121-1134, doi:10.1016/j.cell.2012.08.024.
+
+[^3]: Alexandrov, L. B., Nik-Zainal, S., Wedge, D. C., et al. "Signatures of mutational processes in human cancer." Nature, 2013. doi:10.1038/nature12477.
+
+[^4]: Goldman, M.J., Craft, B., Hastie, M. et al. Visualizing and interpreting cancer genomics data via the Xena platform. Nat Biotechnol (2020), https://doi.org/10.1038/s41587-020-0546-8.
+
+[^5]: Love MI, Huber W, Anders S (2014). “Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2.” Genome Biology, 15, 550, doi:10.1186/s13059-014-0550-8.
+
+[^6]: Tate J. G. et al. COSMIC: the catalogue of somatic mutations in cancer //Nucleic acids research. – 2019. – Т. 47. – №. D1. – С. D941-D947, https://doi.org/10.1093/nar/gky1015.
+
+[^7]: Kuleshov, M. V., Jones, M. R., Rouillard, A. D., et al. "Enrichr: a comprehensive gene set enrichment analysis web server 2016 update." Nucleic Acids Research, 2016. doi:10.1093/nar/gkw377.
+
+[^8]: Rosenthal, R., McGranahan, N., Herrero, J., et al. "DeconstructSigs: delineating mutational processes in single tumors distinguishes DNA repair deficiencies and patterns of carcinoma evolution." Genome Biology, 2016. doi:10.1186/s13059-016-0893-4.
+
+[^9]: Pedregosa, F., Varoquaux, G., Gramfort, A., et al. "Scikit-learn: Machine learning in Python." Journal of Machine Learning Research, 2011.
+
+[^10]: Lambert S. A. et al. The human transcription factors //Cell. – 2018. – Т. 172. – №. 4. – С. 650-665, https://doi.org/10.1016/j.cell.2018.01.029.
