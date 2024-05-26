@@ -7,12 +7,12 @@ library(ggrepel)
 setwd(getSrcDirectory(function(){})[1])
 
 # Read and prepare index data
-index <- read.csv("/data/transpose_ID_SmokingHistory.csv", sep = " ", header = FALSE)
+index <- read.csv("data/transpose_ID_SmokingHistory.csv", sep = " ", header = FALSE)
 colnames(index) <- head(index, 1)
 index <- index[-1, ]
 
 # Read and prepare sample type data
-sample_type <- head(read.csv("/data/transpose_ID_SampleType.csv", sep = " ", header = FALSE), 2)
+sample_type <- head(read.csv("data/transpose_ID_SampleType.csv", sep = " ", header = FALSE), 2)
 colnames(sample_type) <- head(sample_type, 1)
 sample_type <- sample_type[-1, ]
 sample_type[sample_type == 'Primary'] <- 1
@@ -22,12 +22,12 @@ sample_type <- lapply(sample_type, as.numeric)
 sample_type <- as.data.frame(sample_type)
 
 # Read and prepare gene data
-data <- read.csv("/data/tcga.gene_sums.LUAD.R109", sep = "\t", header = FALSE)
+data <- read.csv("data/tcga.gene_sums.LUAD.R109", sep = "\t", header = FALSE)
 colnames(data) <- head(data, 1)
 data <- data[-1, ]
 
 # Read and prepare gene annotation data
-gene_refseq <- read.csv("/data/gene_annotation_table.txt", sep = "\t", header = FALSE)
+gene_refseq <- read.csv("data/gene_annotation_table.txt", sep = "\t", header = FALSE)
 colnames(gene_refseq) <- head(gene_refseq, 1)
 gene_refseq <- gene_refseq[-1, ]
 
@@ -57,7 +57,7 @@ data_2 <- bind_rows(data_1, index)
 data_2 <- data_2[, colSums(is.na(data_2)) == 0]
 
 # Filter data based on training indices
-train_index <- read.csv("/data/train_id.csv", header = FALSE)
+train_index <- read.csv("data/train_id.csv", header = FALSE)
 data_2 <- data_2[, colnames(data_2) %in% train_index$V1]
 
 # Sort data
