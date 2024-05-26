@@ -8,8 +8,12 @@ setwd(getSrcDirectory(function(){})[1])
 
 # Read and prepare index data
 index <- read.csv("data/transpose_ID_SmokingHistory.csv", sep = " ", header = FALSE)
-colnames(index) <- head(index, 1)
+cols <- head(index, 1)
+colnames(index) <- cols
 index <- index[-1, ]
+index <- lapply(index, as.numeric)
+index <- as.data.frame(index)
+colnames(index) <- cols
 
 # Read and prepare sample type data
 sample_type <- head(read.csv("data/transpose_ID_SampleType.csv", sep = " ", header = FALSE), 2)
@@ -28,14 +32,15 @@ data <- read.csv("data/tcga.gene_sums.LUAD.R109", sep = "\t", header = FALSE)
 cols <- head(data, 1)
 colnames(data) <- cols
 data <- data[-1, ]
+gene_names <- data[[1]]
+data <- data[, -1]
 data <- lapply(data, as.numeric)
 data <- as.data.frame(data)
+data <- cbind(gene_id = gene_names, data)
 colnames(data) <- cols
 
 # Read and prepare gene annotation data
-gene_refseq <- read.csv("data/gene_annotation_table.txt", sep = "\t", header = FALSE)
-colnames(gene_refseq) <- head(gene_refseq, 1)
-gene_refseq <- gene_refseq[-1, ]
+gene_refseq <- read.csv("data/gene_annotation_table.txt", sep = "\t")
 
 # Merge gene data with annotation
 data_refseq <- merge(data, gene_refseq, by = 'gene_id', all = TRUE)
@@ -71,7 +76,7 @@ data_t <- t(data_2)
 data_t_sort <- data_t[order(data_t[, 54043]), ]
 data_sort <- t(data_t_sort)
 data_sort_1 <- data_sort[-nrow(data_sort), ]
-# write.table(data_t_sort, file = "/data/data_t_sort_all.txt", sep = "\t")
+# write.table(data_t_sort, file = "data/data_t_sort_all.txt", sep = "\t")
 
 # Prepare metadata for DESeq2
 metaF <- data.frame(samples = colnames(data_sort_1),
