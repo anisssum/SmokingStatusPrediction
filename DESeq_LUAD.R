@@ -25,8 +25,12 @@ colnames(sample_type) <- cols
 
 # Read and prepare gene data
 data <- read.csv("data/tcga.gene_sums.LUAD.R109", sep = "\t", header = FALSE)
-colnames(data) <- head(data, 1)
+cols <- head(data, 1)
+colnames(data) <- cols
 data <- data[-1, ]
+data <- lapply(data, as.numeric)
+data <- as.data.frame(data)
+colnames(data) <- cols
 
 # Read and prepare gene annotation data
 gene_refseq <- read.csv("data/gene_annotation_table.txt", sep = "\t", header = FALSE)
